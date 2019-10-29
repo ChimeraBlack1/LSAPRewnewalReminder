@@ -1,7 +1,20 @@
 import math
 import xlrd
 import xlwt
+import smtplib
 from datetime import date
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+# set email parameters
+server = smtplib.SMTP('documentdirection-ca.mail.protection.outlook.com', 25)
+fromaddr = "chris@documentdirection.ca"
+toaddr = "chris@documentdirection.ca"
+msg = MIMEMultipart()
+msg['From'] = "chris@documentdirection.ca"
+msg['To'] = "chris@documentdirection.ca"
+msg['Subject'] = "Expiring Software Licenses"
+body = ""
 
 #open LSAP Rewnewal workbook
 loc = ("lsapRenewal.xlsx")
@@ -20,11 +33,13 @@ for x in range(1, endOfList):
 
   if daysUntilExpired < 0:
     print(companyName +  "'s contract expired " + str((int(daysUntilExpired) *-1)) + " days ago")
+    body = body + "<br>" + companyName +  "'s contract expired " + str((int(daysUntilExpired) *-1)) + " days ago <br>"
   elif daysUntilExpired > 0 and daysUntilExpired <= 90:
     print(companyName +  "'s contract will expire in " + str(int(daysUntilExpired)) + " days")
-  # else:
-  #   print("not expiring in the next 90 days")
+    body = body + "<br>" + companyName +  "'s contract will expire in " + str(int(daysUntilExpired)) + " days <br>"
+  
 
-# print(str(companyName))
-# print(str(NumberOfLicenses))
-# print(int(lsapExp))
+# send mail
+msg.attach(MIMEText(body, 'html'))
+text = msg.as_string()
+server.sendmail(fromaddr, toaddr, text)
