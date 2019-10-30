@@ -25,15 +25,14 @@ thisSheet = 0
 endOfList = 100
 today = int(sheet.cell_value(0, 0))
 
+# for each sheet, check if the contract has expired
 for y in range(0, numberOfSheets):
   for x in range(1, endOfList):
     try:
       companyName = sheet.cell_value(x, 1)
     except: 
       break
-    # if companyName == "":
-    #   print("done")
-    #   break
+
     try:
       NumberOfLicenses = sheet.cell_value(x, 2)
       lsapExp = sheet.cell_value(x, 3)
@@ -46,20 +45,16 @@ for y in range(0, numberOfSheets):
       continue
 
     if daysUntilExpired < 0:
-      print(companyName +  "'s contract expired " + str((int(daysUntilExpired) *-1)) + " days ago")
       body = body + "<br>" + companyName +  "'s contract expired " + str((int(daysUntilExpired) *-1)) + " days ago <br>"
     elif daysUntilExpired > 0 and daysUntilExpired <= 90:
-      print(companyName +  "'s contract will expire in " + str(int(daysUntilExpired)) + " days")
       body = body + "<br>" + companyName +  "'s contract will expire in " + str(int(daysUntilExpired)) + " days <br>"
   
   thisSheet = thisSheet + 1
-  print("Sheet: " + str(thisSheet))
   try:
     sheet = wb.sheet_by_index(thisSheet)
   except:
     break
   
-
 # send mail
 msg.attach(MIMEText(body, 'html'))
 text = msg.as_string()
