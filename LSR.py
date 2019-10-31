@@ -8,11 +8,11 @@ from email.mime.multipart import MIMEMultipart
 
 # set email parameters
 server = smtplib.SMTP('documentdirection-ca.mail.protection.outlook.com', 25)
-fromaddr = "chris@documentdirection.ca"
+fromaddr = "christopherparke@zoho.com"
 toaddr = "chris@documentdirection.ca"
 msg = MIMEMultipart()
-msg['From'] = "chris@documentdirection.ca"
-msg['To'] = "chris@documentdirection.ca"
+msg['From'] = "Chris Parke"
+msg['To'] = "Christopher Parke"
 msg['Subject'] = "Expiring Software Licenses"
 body = ""
 
