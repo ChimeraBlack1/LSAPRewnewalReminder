@@ -46,6 +46,8 @@ for y in range(0, numberOfSheets):
 
     if daysUntilExpired < 0:
       body = body + "<br>" + companyName +  "'s contract expired " + str((int(daysUntilExpired) *-1)) + " days ago <br>"
+    elif daysUntilExpired == 0:
+      body = body + "<br>" + companyName +  "'s contract expired today. <br>"
     elif daysUntilExpired > 0 and daysUntilExpired <= 90:
       body = body + "<br>" + companyName +  "'s contract will expire in " + str(int(daysUntilExpired)) + " days <br>"
   
